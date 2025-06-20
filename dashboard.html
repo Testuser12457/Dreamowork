@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dreameo Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="scripts.js"></script>
+</head>
+<body>
+  <script>
+    if (localStorage.getItem("authenticated") !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <nav class="navbar">
+    <div class="logo">Dreameo Work</div>
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+    <ul class="menu">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="inbox.html">Inbox</a></li>
+      <li><a href="emails.html">Emails</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+    <button id="theme-toggle">🌓</button>
+  </nav>
+
+  <main>
+    <section class="dashboard">
+      <h2>📊 Total Earnings Today: <span id="total-earnings">$0.00</span></h2>
+      <div id="blogs-container" class="blogs-grid"></div>
+
+      <div class="summary-card blog-card">
+        <h3>📈 Summary</h3>
+        <p><strong>Total Earnings (Day):</strong> <span id="sum-day">$0.00</span></p>
+        <p><strong>Total Earnings (Week):</strong> <span id="sum-week">$0.00</span></p>
+        <p><strong>Total Earnings (Month):</strong> <span id="sum-month">$0.00</span></p>
+        <p><strong>Total Views:</strong> <span id="total-views">0</span></p>
+        <p><strong>AI Agents Today:</strong> <span id="total-agents">0</span></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
