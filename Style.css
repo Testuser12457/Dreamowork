@@ -1,0 +1,125 @@
+/* styles.css - Dreameo Work */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+header {
+  background-color: #4f46e5;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+main {
+  padding: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#blogs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.blog-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
+  position: relative;
+}
+
+.blog-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.blog-card button.inbox-toggle {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.blog-card .inbox {
+  margin-top: 1rem;
+  background-color: #f0f4ff;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.email-box {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.email-msg {
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed #ddd;
+  font-size: 0.9rem;
+}
+
+.email-msg:last-child {
+  border-bottom: none;
+}
+
+.email-box h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.email-box .empty {
+  font-style: italic;
+  color: #999;
+}
+
+#summary {
+  background-color: #e0e7ff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+#total-earnings {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1d4ed8;
+  margin-top: 0.5rem;
+}
+
+footer {
+  background-color: #111827;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
