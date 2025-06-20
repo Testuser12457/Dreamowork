@@ -1,125 +1,189 @@
-/* styles.css - Dreameo Work */ 
-
-body {
+ /* General reset */
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
+  box-sizing: border-box;
 }
 
-header {
-  background-color: #4f46e5;
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f3f4f6;
+  color: #111827;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3b82f6;
+  padding: 1rem 2rem;
   color: white;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 2rem;
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.subtitle {
-  font-size: 1rem;
-  opacity: 0.8;
-}
-
-main {
-  padding: 1rem;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-#blogs-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+.navbar .menu {
+  display: flex;
   gap: 1rem;
-  margin-bottom: 2rem;
+  list-style: none;
+}
+
+.navbar .menu li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar .menu li a:hover,
+.navbar .menu li a.active {
+  text-decoration: underline;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: white;
+}
+
+/* Layout */
+main {
+  padding: 2rem;
+}
+
+.dashboard h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Blog Cards */
+.blogs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.5rem;
 }
 
 .blog-card {
   background-color: white;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  transition: 0.3s ease;
-  position: relative;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
 }
 
 .blog-card:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 
-.blog-card button.inbox-toggle {
-  background-color: #4f46e5;
+body.dark-mode .blog-card {
+  background-color: #374151;
+  color: #f3f4f6;
+}
+
+/* Inbox styling */
+.email-card {
+  padding: 1rem;
+  background: #f9fafb;
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+}
+
+body.dark-mode .email-card {
+  background-color: #2d3748;
+}
+
+/* Login styles */
+.login-body {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.login-container h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.login-container input {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+}
+
+.login-container button {
+  background-color: #2563eb;
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 0.75rem;
   cursor: pointer;
-  font-size: 0.9rem;
 }
 
-.blog-card .inbox {
-  margin-top: 1rem;
-  background-color: #f0f4ff;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
+.login-container button:hover {
+  background-color: #1e40af;
 }
 
-.email-box {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-  background: #fff;
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar .menu {
+    display: none;
+    flex-direction: column;
+    background: #3b82f6;
+    position: absolute;
+    top: 60px;
+    right: 2rem;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  #menu-toggle:checked + .menu-icon + .menu {
+    display: flex;
+  }
+
+  .menu-icon {
+    display: block;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
 }
 
-.email-msg {
-  padding: 0.3rem 0;
-  border-bottom: 1px dashed #ddd;
-  font-size: 0.9rem;
-}
-
-.email-msg:last-child {
-  border-bottom: none;
-}
-
-.email-box h4 {
-  margin: 0 0 0.5rem 0;
-  font-size: 0.95rem;
-  color: #333;
-}
-
-.email-box .empty {
-  font-style: italic;
-  color: #999;
-}
-
-#summary {
-  background-color: #e0e7ff;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-#total-earnings {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #1d4ed8;
-  margin-top: 0.5rem;
-}
-
-footer {
-  background-color: #111827;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
-  margin-top: 2rem;
+.menu-icon {
+  display: none;
 }
