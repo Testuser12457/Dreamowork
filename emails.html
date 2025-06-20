@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Center - Dreameo Work</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="scripts.js"></script>
+</head>
+<body>
+  <script>
+    if (localStorage.getItem("authenticated") !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <nav class="navbar">
+    <div class="logo">Dreameo Work</div>
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+    <ul class="menu">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="inbox.html">Inbox</a></li>
+      <li><a href="emails.html" class="active">Emails</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+    <button id="theme-toggle">🌓</button>
+  </nav>
+
+  <main>
+    <section class="dashboard">
+      <h2>📧 Email Accounts & Info</h2>
+      <div class="blogs-grid" id="email-accounts-list">
+        <!-- يتم تعبئة البيانات تلقائيًا من scripts.js -->
+      </div>
+    </section>
+  </main>
+</body>
+</html>
