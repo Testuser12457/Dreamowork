@@ -1,91 +1,130 @@
-// scripts.js - Dreameo Work Frontend Logic with Email Inbox
+// Theme toggle
+const toggleBtn = document.getElementById("theme-toggle");
+if (toggleBtn) {
+  toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+  });
+}
 
-const blogs = [
-  {
-    id: "blog1",
-    name: "Tech Zone",
-    earningsToday: 1.25,
-    emails: [
+// بيانات وهمية للمدونات
+const blogs = Array.from({ length: 10 }, (_, i) => {
+  const id = i + 1;
+  return {
+    name: `Blog ${id}`,
+    earnings: {
+      day: +(Math.random() * 3 + 1).toFixed(2),
+      week: +(Math.random() * 30 + 5).toFixed(2),
+      month: +(Math.random() * 100 + 20).toFixed(2),
+    },
+    views: Math.floor(Math.random() * 2000 + 300),
+    aiAgents: Math.floor(Math.random() * 5 + 1),
+    emailAccounts: Array.from({ length: 5 }, (_, j) => ({
+      email: `blog${id}_email${j + 1}@dreameo.com`,
+      password: `pass${j + 1}Blog${id}`,
+      platforms: ["Google", "Pinterest", "Reddit"].slice(
+        0,
+        Math.floor(Math.random() * 3 + 1)
+      ),
+      inbox: [`Welcome to Blog ${id} email ${j + 1}`, `Stats update`, `Error report`],
+    })),
+    projects: [
       {
-        address: "techzone.1@email.com",
-        inbox: [
-          {
-            from: "adsense@google.com",
-            subject: "Earnings update",
-            time: "09:22 AM",
-            snippet: "Your daily revenue is ready..."
-          },
-          {
-            from: "alert@pinterest.com",
-            subject: "Policy Notice",
-            time: "08:01 AM",
-            snippet: "One of your pins was removed."
-          }
-        ]
+        name: "Auto Blogger",
+        status: Math.random() > 0.2 ? "✅ Running" : "❌ Failed",
+        lastWorkflow: new Date().toLocaleString(),
       },
-      { address: "techzone.2@email.com", inbox: [] },
-      { address: "techzone.3@email.com", inbox: [] },
-      { address: "techzone.4@email.com", inbox: [] },
-      { address: "techzone.5@email.com", inbox: [] }
-    ]
-  }
-  // يمكنك تكرار هذا النموذج لبقية المدونات blog2 إلى blog10
-];
+      {
+        name: "AI Agent",
+        accounts: 5,
+        status: Math.random() > 0.2 ? "✅ Running" : "❌ Failed",
+        lastWorkflow: new Date().toLocaleString(),
+      },
+    ],
+    mastodonStatus: Math.random() > 0.9 ? "❌ Banned" : "✅ Active",
+    lastPost: `Last post at ${new Date().toLocaleTimeString()}`,
+  };
+});
 
-function renderBlogs() {
-  const container = document.getElementById("blogs-container");
-  container.innerHTML = "";
+// Dashboard Page
+const blogsContainer = document.getElementById("blogs-container");
+if (blogsContainer) {
+  let sumDay = 0, sumWeek = 0, sumMonth = 0, sumViews = 0, totalAgents = 0;
 
   blogs.forEach((blog) => {
     const card = document.createElement("div");
     card.className = "blog-card";
-
     card.innerHTML = `
-      <h3>${blog.name}</h3>
-      <p><strong>Earnings Today:</strong> $${blog.earningsToday.toFixed(2)}</p>
-      <button class="inbox-toggle" onclick="toggleInbox('${blog.id}')">📥 عرض الإيميلات</button>
-      <div class="inbox" id="${blog.id}-inbox" style="display: none;"></div>
+      <h3>📰 ${blog.name}</h3>
+      <p><strong>Views:</strong> ${blog.views}</p>
+      <p><strong>Earnings Today:</strong> $${blog.earnings.day}</p>
+      <p><strong>Earnings This Week:</strong> $${blog.earnings.week}</p>
+      <p><strong>Earnings This Month:</strong> $${blog.earnings.month}</p>
+      <p><strong>Mastodon:</strong> ${blog.mastodonStatus}</p>
+      <p><strong>Last Post:</strong> ${blog.lastPost}</p>
+      <div><strong>Projects:</strong></div>
+      ${blog.projects
+        .map(
+          (p) => `
+        <p>🔧 ${p.name} - ${p.status} <br/><small>Last: ${p.lastWorkflow}</small></p>
+      `
+        )
+        .join("")}
     `;
+    blogsContainer.appendChild(card);
 
-    container.appendChild(card);
+    sumDay += blog.earnings.day;
+    sumWeek += blog.earnings.week;
+    sumMonth += blog.earnings.month;
+    sumViews += blog.views;
+    totalAgents += blog.aiAgents;
+  });
+
+  document.getElementById("sum-day").textContent = `$${sumDay.toFixed(2)}`;
+  document.getElementById("sum-week").textContent = `$${sumWeek.toFixed(2)}`;
+  document.getElementById("sum-month").textContent = `$${sumMonth.toFixed(2)}`;
+  document.getElementById("total-views").textContent = sumViews;
+  document.getElementById("total-agents").textContent = totalAgents;
+
+  document.getElementById("total-earnings").textContent = `$${sumDay.toFixed(2)}`;
+
+  // إرسال تنبيه إذا تجاوزت 5$
+  if (sumDay >= 5) {
+    console.log("🔔 Alert: Earnings exceeded $5 today! Email sent to raromero084@gmail.com");
+  }
+}
+
+// Inbox Page
+const inboxContainer = document.getElementById("inbox-container");
+if (inboxContainer) {
+  blogs.forEach((blog, i) => {
+    const section = document.createElement("div");
+    section.className = "blog-card";
+    section.innerHTML = `<h3>📥 ${blog.name}</h3>`;
+    blog.emailAccounts.forEach((acc) => {
+      section.innerHTML += `
+        <div class="email-card">
+          <p><strong>Email:</strong> ${acc.email}</p>
+          <p><strong>Inbox:</strong> ${acc.inbox.join(", ")}</p>
+        </div>
+      `;
+    });
+    inboxContainer.appendChild(section);
   });
 }
 
-function toggleInbox(blogId) {
-  const inboxEl = document.getElementById(`${blogId}-inbox`);
-  const blog = blogs.find((b) => b.id === blogId);
-  inboxEl.innerHTML = "";
-
-  blog.emails.forEach((email) => {
-    const block = document.createElement("div");
-    block.className = "email-box";
-    block.innerHTML = `<h4>📧 ${email.address}</h4>`;
-
-    if (email.inbox.length === 0) {
-      block.innerHTML += `<p class='empty'>📭 لا توجد رسائل</p>`;
-    } else {
-      email.inbox.forEach((msg) => {
-        block.innerHTML += `
-          <div class="email-msg">
-            <p><strong>${msg.from}</strong> — ${msg.subject}</p>
-            <small>${msg.time} — ${msg.snippet}</small>
-          </div>
-        `;
-      });
-    }
-
-    inboxEl.appendChild(block);
+// Emails Info Page
+const emailListContainer = document.getElementById("email-accounts-list");
+if (emailListContainer) {
+  blogs.forEach((blog) => {
+    blog.emailAccounts.forEach((acc) => {
+      const card = document.createElement("div");
+      card.className = "blog-card";
+      card.innerHTML = `
+        <h3>📧 ${acc.email}</h3>
+        <p><strong>Password:</strong> ${acc.password}</p>
+        <p><strong>Platforms:</strong> ${acc.platforms.join(", ")}</p>
+      `;
+      emailListContainer.appendChild(card);
+    });
   });
-
-  inboxEl.style.display = inboxEl.style.display === "none" ? "block" : "none";
-}
-
-function calculateTotalEarnings() {
-  const total = blogs.reduce((sum, blog) => sum + blog.earningsToday, 0);
-  document.getElementById("total-earnings").textContent = `$${total.toFixed(2)}`;
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  renderBlogs();
-  calculateTotalEarnings();
-});
+                  }
